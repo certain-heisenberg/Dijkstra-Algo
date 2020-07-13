@@ -38,6 +38,8 @@ int main() {
         int a, b, w;
         cin>>a>>b>>w;
         arr[a].push_back({b,w});
+        // #IMPORTANT: If the graph is directed then below line will not be written.
+        // Only upper line will be written to show [a->b] a is reachable to b but b is not reachable to a.
         arr[b].push_back({a,w});
     }
     dijkstra(1, 0);
