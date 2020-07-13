@@ -17,7 +17,8 @@ void dijkstra(int v, int d){
     
     while(!pq.empty()){
         int node=pq.top().second;
-        dist[node]=pq.top().first;
+        int node_d=pq.top().first;
+        dist[node]=node_d;
         pq.pop();
         
         for(pi c: arr[node]){
