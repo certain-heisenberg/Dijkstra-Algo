@@ -23,10 +23,10 @@ void dijkstra(int v, int d){
         
         for(pi c: arr[node]){
             int child=c.first;
-            int w=c.second;
-            int len=dist[node]+w;
-            if(len<dist[child]){
-                pq.push({len, child});
+            int weight=c.second;
+            int dist_from_node=dist[node]+weight;
+            if(dist_from_node<dist[child]){
+                pq.push({dist_from_node, child});
             }
         }
     }
@@ -36,12 +36,12 @@ int main() {
     int n, m;
     cin>>n>>m;
     for(int i=1; i<=m; i++){
-        int a, b, w;
-        cin>>a>>b>>w;
-        arr[a].push_back({b,w});
+        int a, b, weight;
+        cin>>a>>b>>weight;
+        arr[a].push_back({b,weight});
         // #IMPORTANT: If the graph is directed then below line will not be written.
         // Only upper line will be written to show [a->b] a is reachable to b but b is not reachable to a.
-        arr[b].push_back({a,w});
+        arr[b].push_back({a,weight});
     }
     dijkstra(1, 0);
     for(int i=1; i<=n; i++){
