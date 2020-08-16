@@ -2,38 +2,43 @@
 using namespace std;
 
 typedef pair<int,int> pi;
-
-vector<pi> arr[1001];
-vector<int> dist(1001, INT_MAX);
+typedef pair<int,pi> ppi;
 
 struct comp{
-    bool operator()(pi &a, pi &b){
+    bool operator()(ppi &a, ppi &b){
         return a.first<b.first;
     }
 };
 
-priority_queue<pi, vector<pi>, comp> pq;
+vector<pi> arr[101];
+int Min[101][101];
+int S[101];
+int vis[101][101];
 
-void dijkstra(int v, int d, int money){
-	dist[v]=d;
-	
-	if(money<=0) return;
-	
-	for(pi c: arr[v]){
-		int child=c.first;
-		int weight=c.second;
-		int dist_from_node=dist[v]+weight;
-		if(dist_from_node<dist[child]){
-			pq.push({dist_from_node, child});
-		}
-	}
+int n, m, M;
+
+void dijkstra(){
+	priority_queue<ppi, vector<ppi>, comp> pq;
+	pq.push({0, {1, M}});
 	
 	while(!pq.empty()){
-		int node=pq.top().second;
-		int node_d=pq.top().first;
+		pi temp=pq.top().second;
 		pq.pop();
-	
-		dijkstra(node, node_d, money-node);
+		int k=temp.first;
+		int l=temp.second;
+		
+		if(vis[k][l]==0){
+			vis[k][l]=1;		
+			for(pi c: arr[k]){
+				int p=c.first;
+				int weight=c.second;
+				
+				if(l-S[p]>=0 && Min[p][l-S[p]]>Min[k][l]+weight){
+					Min[p][l-S[p]]=Min[k][l]+weight;
+					pq.push({Min[p][l-S[p]], {p, l-S[p]}});
+				}
+			}
+		}
 	}
 }
 
@@ -42,7 +47,6 @@ signed main(){
 	cin.tie(0);
 	cout.tie(0);
 	
-	int n, m, M;
     cin>>n>>m>>M;
     for(int i=1; i<=m; i++){
         int a, b, weight;
@@ -51,14 +55,29 @@ signed main(){
         arr[b].push_back({a,weight});
     }
     
-    dijkstra(1, 0, M-1);
-    
     for(int i=1; i<=n; i++){
-        cout<<dist[i]<<" ";
-    }
+		cin>>S[i];
+	}
+	
+	for(int i=1; i<=n; i++){
+		for(int j=1; j<=M; j++){
+			Min[i][j]=INT_MAX;
+		}
+	}
+    
+    Min[1][M]=0;
+    dijkstra();
+    
+    int res=-1;
+    for(int j=0; j<=M; j++){
+		if(Min[n][j]<INT_MAX) res=Min[n][j];
+	}
+	
+	cout<<res<<endl;
 }
+
 /*
-6 9 8(M)
+6 9 16
 
 1 2 4
 1 6 2
@@ -69,4 +88,6 @@ signed main(){
 5 4 5
 5 3 3
 3 4 6
+
+1 2 3 4 5 6
  */
