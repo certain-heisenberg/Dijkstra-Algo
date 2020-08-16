@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define inf 1000000000
 typedef pair<int,int> pi;
 typedef pair<int,pi> ppi;
 
@@ -19,7 +20,7 @@ int n, m, M;
 
 void dijkstra(){
 	priority_queue<ppi, vector<ppi>, comp> pq;
-	pq.push({0, {1, M}});
+	pq.push({0, {1, M-S[1]}});
 	
 	while(!pq.empty()){
 		pi temp=pq.top().second;
@@ -47,37 +48,44 @@ signed main(){
 	cin.tie(0);
 	cout.tie(0);
 	
-	cin>>n>>m>>M;
-	for(int i=1; i<=m; i++){
-		int a, b, weight;
-        	cin>>a>>b>>weight;
-        	arr[a].push_back({b,weight});
-        	arr[b].push_back({a,weight});
-    	}
+    cin>>n>>m>>M;
+    for(int i=1; i<=m; i++){
+        int a, b, weight;
+        cin>>a>>b>>weight;
+        arr[a].push_back({b,weight});
+        arr[b].push_back({a,weight});
+    }
     
-    	for(int i=1; i<=n; i++){
+    for(int i=1; i<=n; i++){
 		cin>>S[i];
 	}
 	
 	for(int i=1; i<=n; i++){
 		for(int j=1; j<=M; j++){
-			Min[i][j]=INT_MAX;
+			Min[i][j]=inf;
 		}
 	}
     
-  	Min[1][M]=0;
-    	dijkstra();
+    Min[1][M-S[1]]=0;
+    dijkstra();
     
- 	int res=-1;
-	for(int j=0; j<=M; j++){
-		if(Min[n][j]<INT_MAX) res=Min[n][j];
+    int dist=inf;
+    int cost;
+    for(int j=1; j<=M; j++){
+		if(Min[n][j]<dist){
+			dist=Min[n][j];
+			cost=j;
+		}
 	}
 	
-	cout<<res<<endl;
+	if(dist==inf) cout<<"No path found from node 1 to node n"<<endl;
+	else{
+		cout<<"Distance of shortest and cheapest path from node 1 to node n is "<<dist<<endl;
+		//cout<<"Cost of this path is "<<M-cost<<endl;
+	}
 }
 
 /*
-**TEST CASE**
 6 9 16
 
 1 2 4
