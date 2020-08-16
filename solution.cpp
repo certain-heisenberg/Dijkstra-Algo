@@ -72,9 +72,9 @@ signed main(){
 	int dist=inf;
 	int cost;
 	for(int j=1; j<=M; j++){
-		if(Min[n][j]<dist){
-		dist=Min[n][j];
-		cost=j+S[n];
+		if(Min[n][j]<=dist){
+			dist=Min[n][j];
+			cost=j+S[n];
 		}
 	}
 
