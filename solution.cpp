@@ -27,7 +27,7 @@ void dijkstra(){
 		pq.pop();
 		int k=temp.first;
 		int l=temp.second;
-		
+
 		if(vis[k][l]==0){
 			vis[k][l]=1;		
 			for(pi c: arr[k]){
@@ -47,45 +47,47 @@ signed main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(0);
 	cout.tie(0);
-	
-    cin>>n>>m>>M;
-    for(int i=1; i<=m; i++){
-        int a, b, weight;
-        cin>>a>>b>>weight;
-        arr[a].push_back({b,weight});
-        arr[b].push_back({a,weight});
-    }
-    
-    for(int i=1; i<=n; i++){
+
+	cin>>n>>m>>M;
+	for(int i=1; i<=m; i++){
+		int a, b, weight;
+		cin>>a>>b>>weight;
+		arr[a].push_back({b,weight});
+		arr[b].push_back({a,weight});
+	}
+
+	for(int i=1; i<=n; i++){
 		cin>>S[i];
 	}
-	
+
 	for(int i=1; i<=n; i++){
 		for(int j=1; j<=M; j++){
 			Min[i][j]=inf;
 		}
 	}
-    
-    Min[1][M-S[1]]=0;
-    dijkstra();
-    
-    int dist=inf;
-    int cost;
-    for(int j=1; j<=M; j++){
+
+	Min[1][M-S[1]]=0;
+	dijkstra();
+
+	int dist=inf;
+	int cost;
+	for(int j=1; j<=M; j++){
 		if(Min[n][j]<dist){
-			dist=Min[n][j];
-			cost=j;
+		dist=Min[n][j];
+		cost=j+S[n];
 		}
 	}
-	
-	if(dist==inf) cout<<"No path found from node 1 to node n"<<endl;
+
+	cout<<"Given initial conditions and some amount of money M, ";
+	if(dist==inf) cout<<"no path is found from Node 1 to Node N"<<endl;
 	else{
-		cout<<"Distance of shortest and cheapest path from node 1 to node n is "<<dist<<endl;
-		//cout<<"Cost of this path is "<<M-cost<<endl;
+		cout<<"distance of shortest(first) and cheapest path from Node 1 to Node N is "<<dist<<"."<<endl;
+		cout<<"Also, cost of this path is "<<M-cost<<"."<<endl;
 	}
 }
 
 /*
+**TEST CASE**
 6 9 16
 
 1 2 4
