@@ -47,15 +47,15 @@ signed main(){
 	cin.tie(0);
 	cout.tie(0);
 	
-    cin>>n>>m>>M;
-    for(int i=1; i<=m; i++){
-        int a, b, weight;
-        cin>>a>>b>>weight;
-        arr[a].push_back({b,weight});
-        arr[b].push_back({a,weight});
-    }
+	cin>>n>>m>>M;
+	for(int i=1; i<=m; i++){
+		int a, b, weight;
+        	cin>>a>>b>>weight;
+        	arr[a].push_back({b,weight});
+        	arr[b].push_back({a,weight});
+    	}
     
-    for(int i=1; i<=n; i++){
+    	for(int i=1; i<=n; i++){
 		cin>>S[i];
 	}
 	
@@ -65,11 +65,11 @@ signed main(){
 		}
 	}
     
-    Min[1][M]=0;
-    dijkstra();
+  	Min[1][M]=0;
+    	dijkstra();
     
-    int res=-1;
-    for(int j=0; j<=M; j++){
+ 	int res=-1;
+	for(int j=0; j<=M; j++){
 		if(Min[n][j]<INT_MAX) res=Min[n][j];
 	}
 	
